@@ -2,20 +2,20 @@
   <div class="app-container">
     <el-button type="primary" @click="handleAddRole">New Role</el-button>
 
-    <el-table :data="rolesList" style="width: 100%;margin-top:30px;" border>
+    <el-table :data="driverList" style="width: 100%;margin-top:30px;" border>
       <el-table-column align="center" label="Role Key" width="220">
-        <template slot-scope="scope">
-          {{ scope.row.key }}
-        </template>
-      </el-table-column>
-      <el-table-column align="center" label="Role Name" width="220">
         <template slot-scope="scope">
           {{ scope.row.name }}
         </template>
       </el-table-column>
+      <el-table-column align="center" label="Role Name" width="220">
+        <template slot-scope="scope">
+          {{ scope.row.contactNumber }}
+        </template>
+      </el-table-column>
       <el-table-column align="header-center" label="Description">
         <template slot-scope="scope">
-          {{ scope.row.description }}
+          {{ scope.row.idNumber }}
         </template>
       </el-table-column>
       <el-table-column align="center" label="Operations">
@@ -62,7 +62,7 @@
 <script>
 import path from 'path'
 import { deepClone } from '@/utils'
-import { getRoutes, getRoles, addRole, deleteRole, updateRole } from '@/api/role'
+import { getRoutes, getRoles, addRole, deleteRole, updateRole, getDrivers } from '@/api/role'
 
 const defaultRole = {
   key: '',
@@ -77,6 +77,7 @@ export default {
       role: Object.assign({}, defaultRole),
       routes: [],
       rolesList: [],
+      driverList: [],
       dialogVisible: false,
       dialogType: 'new',
       checkStrictly: false,
@@ -95,6 +96,7 @@ export default {
     // Mock: get all routes and roles list from server
     this.getRoutes()
     this.getRoles()
+    this.getDrivers()
   },
   methods: {
     async getRoutes() {
@@ -102,6 +104,15 @@ export default {
       this.serviceRoutes = res.data
       this.routes = this.generateRoutes(res.data)
     },
+
+    async getDrivers() {
+      const res = await getDrivers()
+      console.log('Driver Details', res._embedded.driverList)
+      this.driverList = res._embedded.driverList
+      // this.serviceRoutes = res.data
+      // this.routes = this.generateRoutes(res.data)
+    },
+
     async getRoles() {
       const res = await getRoles()
       this.rolesList = res.data

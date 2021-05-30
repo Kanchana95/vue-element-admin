@@ -1,8 +1,10 @@
 import request from '@/utils/request'
+import loginRequest from '@/utils/loginRequest'
 
 export function login(data) {
-  return request({
-    url: '/vue-element-admin/user/login',
+  console.log(data, 'Credintials')
+  return loginRequest({
+    url: '/auth/',
     method: 'post',
     data
   })

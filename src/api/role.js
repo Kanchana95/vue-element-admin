@@ -1,4 +1,6 @@
 import request from '@/utils/request'
+import RequestExternal from '@/utils/RequestExternal'
+import axios from 'axios'
 
 export function getRoutes() {
   return request({
@@ -10,6 +12,13 @@ export function getRoutes() {
 export function getRoles() {
   return request({
     url: '/vue-element-admin/roles',
+    method: 'get'
+  })
+}
+
+export function getDrivers() {
+  return RequestExternal({
+    url: 'delivery/drivers',
     method: 'get'
   })
 }
